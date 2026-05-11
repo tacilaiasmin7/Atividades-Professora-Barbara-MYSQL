@@ -1,0 +1,47 @@
+DROP TABLE IF EXISTS aluno;
+DROP TABLE IF EXISTS curso;
+DROP TABLE IF EXISTS matricula;
+
+CREATE TABLE aluno (
+	id_aluno INT PRIMARY KEY,
+  	nome VARCHAR(100) NOT NULL,
+  	data_nascimento DATE NOT NULL,
+  	email VARCHAR (100) NOT NULL
+);
+
+CREATE TABLE curso (
+  id_curso INT PRIMARY KEY,
+  nome_curso VARCHAR(150) NOT NULL,
+  numero_dias INT NOT NULL
+);
+  
+create table matricula (
+  id_aluno INT,
+  id_curso INT,
+  id_matricula INT PRIMARY KEY,
+  data_matricula DATE NOT NULL,
+  status INT NOT NULL,
+  semestre INT NOT NULL,
+  
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
+  FOREIGN KEY (id_curso) REFERENCES curso(id_curso)
+);
+INSERT INTO aluno VALUES (1, 'Maria Silva', '2007-02-28', 'mariasilva@gmail.com');
+INSERT INTO aluno VALUES (2, 'Friedrich Engels', '2006-11-28', 'friedrichengels@gmail.com');
+INSERT INTO aluno VALUES (3, 'Karl Marx', '2004-05-05', 'karlmarx@gmail.com');
+INSERT INTO aluno VALUES (4, 'Iandra Brandão', '1997-11-11', 'iandrabrandao@gmail.com');
+INSERT INTO aluno VALUES (5, 'Lara Andrade', '2006-12-01', 'laraandrade@gmail.com');
+
+
+INSERT INTO curso VALUES(1, 'Banco de Dados', 1460);
+INSERT INTO curso VALUES (2, 'Algoritimos', 1460);
+INSERT INTO curso VALUES(3, 'Inteligência Artificial', 1460);
+INSERT INTO curso VALUES (4, 'Informática', 1460);
+INSERT INTO curso VALUES (5, 'Ciências da Computação', 1460);
+
+INSERT INTO matricula VALUES (1, 1, 4, '2022-08-08', 1, 4);
+INSERT INTO matricula VALUES (2, 1, 1, '2021-02-15', 1, 1);
+INSERT INTO matricula VALUES (3, 1, 6, '2023-08-07', 1, 6);
+INSERT INTO matricula VALUES (4, 1, 2, '2021-08-10', 1, 2);
+INSERT INTO matricula VALUES (5, 1, 5, '2023-02-13', 1, 5);
+SELECT * FROM aluno;
