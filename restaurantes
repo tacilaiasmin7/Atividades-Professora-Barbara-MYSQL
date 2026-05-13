@@ -1,0 +1,40 @@
+DROP TABLE IF EXISTS clientes;
+DROP TABLE IF EXISTS restaurantes;
+DROP TABLE IF EXISTS pedidos;
+
+CREATE TABLE clientes (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+  	nome VARCHAR(100) NOT NULL,
+  	telefone VARCHAR (9) NOT NULL
+);
+
+CREATE TABLE restaurantes (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome VARCHAR (150) NOT NULL,
+  categoria VARCHAR (150) not NULL
+);
+  
+create table pedidos (
+  id_clientes INT,
+  id_restaurantes INT,
+  valor_total REAL,
+  data_pedido DATE,
+  
+  FOREIGN KEY (id_clientes) REFERENCES clientes(id),
+  FOREIGN KEY (id_restaurantes) REFERENCES restaurantes(id)
+);
+INSERT INTO clientes (nome, telefone) VALUES
+('Marcos Silva', '(31) 99123-4567'),
+('Ana Ferreira', '(21) 99876-1122'),
+('Lucas Oliveira', '(11) 98765-3344');
+
+INSERT INTO restaurantes (nome, categoria) VALUES
+('Sabor Mineiro', 'Comida Mineira'),
+('Bella Massa', 'Italiana'),
+('Temaki House', 'Japonesa');
+
+INSERT INTO pedidos (id_clienteS, id_restauranteS, valor_total, data_pedido) VALUES
+(1, 2, 89.90, '2026-05-10'),
+(2, 1, 45.50, '2026-05-11'),
+(3, 3, 120.00, '2026-05-12');
+SELECT * FROM restaurantes
