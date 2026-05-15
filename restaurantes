@@ -1,27 +1,45 @@
 DROP TABLE IF EXISTS clientes;
 DROP TABLE IF EXISTS restaurantes;
 DROP TABLE IF EXISTS pedidos;
+DROP TABLE IF EXISTS entregadores;
+DROP TABLE IF EXISTS formas_pagamento;
 
 CREATE TABLE clientes (
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	id_clientes INTEGER PRIMARY KEY AUTOINCREMENT,
   	nome VARCHAR(100) NOT NULL,
   	telefone VARCHAR (9) NOT NULL
 );
 
 CREATE TABLE restaurantes (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id_restaurantes INTEGER PRIMARY KEY AUTOINCREMENT,
   nome VARCHAR (150) NOT NULL,
   categoria VARCHAR (150) not NULL
 );
+
+CREATE TABLE entregadores (
+  id_entregador INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome VARCHAR (150) NOT NULL,
+  telefone VARCHAR (9) NOT NULL,
+  veiculo VARCHAR (50) not NULL
+);
+
+CREATE TABLE formas_pagamento (
+  id_pagamento INTEGER PRIMARY KEY AUTOINCREMENT,
+  tipo_pagamento VARCHAR (50) not NULL
+  );
   
 create table pedidos (
   id_clientes INT,
   id_restaurantes INT,
+  id_entregador INT,
+  id_pagamento INT,
   valor_total REAL,
   data_pedido DATE,
   
-  FOREIGN KEY (id_clientes) REFERENCES clientes(id),
-  FOREIGN KEY (id_restaurantes) REFERENCES restaurantes(id)
+  FOREIGN KEY (id_clientes) REFERENCES clientes(id_clientes),
+  FOREIGN KEY (id_restaurantes) REFERENCES restaurantes(id_restaurantes),
+  FOREIGN key (id_pagamento) REFERENCES formas_pagamento(id_pagamento),
+  FOREIGN KEY (id_entregador) REFERENCES entregadores(id_entregador)
 );
 INSERT INTO clientes (nome, telefone) VALUES
 ('Marcos Silva', '(31) 99123-4567'),
@@ -33,8 +51,32 @@ INSERT INTO restaurantes (nome, categoria) VALUES
 ('Bella Massa', 'Italiana'),
 ('Temaki House', 'Japonesa');
 
-INSERT INTO pedidos (id_clientes, id_restaurantes, valor_total, data_pedido) VALUES
-(1, 2, 89.90, '2026-05-10'),
-(2, 1, 45.50, '2026-05-11'),
-(3, 3, 120.00, '2026-05-12');
-SELECT * FROM restaurantes
+INSERT INTO pedidos (id_clientes, id_restaurantes, id_entregador, id_pagamento, valor_total, data_pedido) VALUES
+(1, 2, 1, 1, 89.90, '2026-05-10'),
+(2, 1, 2, 2, 45.50, '2026-05-11'),
+(3, 3, 3, 3, 120.00, '2026-05-12');
+
+INSERT INTO formas_pagamento (tipo_pagamento) VALUES
+('PIX'),
+('Cartão de Crédito'),
+('Cartão de Débito'),
+('Vale Refeição'),
+('Dinheiro');
+
+INSERT INTO entregadores (nome, telefone, veiculo) VALUES
+('Carlos Mendes', '(31) 98888-1111', 'Moto'),
+('Fernanda Lima', '(21) 97777-2222', 'Bicicleta'),
+('João Pedro', '(11) 96666-3333', 'Carro'),
+('Ricardo Alves', '(41) 95555-4444', 'Moto'),
+('Patrícia Souza', '(51) 94444-5555', 'Patinete');
+
+-- novo --
+UPDATE clientes
+SET telefone = '(31) 99876-5432'
+WHERE id_clientes = 1;
+
+UPDATE restaurantes
+SET nome = 'Cantinho da Serra'
+WHERE id_restaurantes = 3;
+
+SELECT * FROM pedidos;
